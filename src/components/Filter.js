@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Filter({ onCategoryChange }) {
+function Item({ name, category }) {
+  const [isInCart, setIsInCart] = useState(false);
+
+  function handleAddToCartClick() {
+    setIsInCart((isInCart) => !isInCart);
+  }
+
   return (
-    <div className="Filter">
-      <input type="text" name="search" placeholder="Search..." />
-      <select name="filter" onChange={onCategoryChange}>
-        <option value="All">Filter by category</option>
-        <option value="Produce">Produce</option>
-        <option value="Dairy">Dairy</option>
-        <option value="Dessert">Dessert</option>
-      </select>
-    </div>
+    <li className={isInCart ? "in-cart" : ""}>
+      <span>{name}</span>
+      <span className="category">{category}</span>
+      <button
+        className={isInCart ? "remove" : "add"}
+        onClick={handleAddToCartClick}
+      >
+        {isInCart ? "Remove From" : "Add to"} Cart
+      </button>
+    </li>
   );
 }
 
-export default Filter;
+export default Item;
